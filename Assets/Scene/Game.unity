@@ -187,7 +187,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 654946970}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 3
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4536eac8fd25c294c9d69d95d28e8997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchPoint: {fileID: 0}
+  prefabProjectile: {fileID: 103762, guid: 39150d021f8aa074094917400a13413e, type: 2}
 --- !u!1 &674893052
 GameObject:
   m_ObjectHideFlags: 0
