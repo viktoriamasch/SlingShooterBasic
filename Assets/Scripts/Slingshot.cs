@@ -6,6 +6,7 @@ public class Slingshot : MonoBehaviour {
 
 	//Fields seen in the Inspector panek
 	public GameObject prefabProjectile;
+	public float shotMult = 4.0f;
 
 	// Internal Variable
 	private GameObject    launchPoint;
@@ -18,7 +19,7 @@ public class Slingshot : MonoBehaviour {
 	void Awake(){
 		Transform launchPointTransform = transform.Find ("LaunchPoint");
 		launchPoint = launchPointTransform.gameObject;
-		launchPoint.SetActive (false);
+		launchPoint.SetActive(false);
 
 		launchPos = launchPointTransform.position;
 
@@ -26,12 +27,12 @@ public class Slingshot : MonoBehaviour {
 
 	
 	void OnMouseEnter() {
-		launchPoint.SetActive (true);
+		launchPoint.SetActive(true);
 	
 	}
 	
 	void OnMouseExit() {
-		launchPoint.SetActive (false);
+		launchPoint.SetActive(false);
 
 
 	}
@@ -42,7 +43,7 @@ public class Slingshot : MonoBehaviour {
 		aimingMode = true;
 
 		// Instatiate a new Projectile
-		projectile = Instantiate (prefabProjectile) as GameObject;
+		projectile = Instantiate(prefabProjectile) as GameObject;
 
 
 		//Start at launchPoint
@@ -50,14 +51,14 @@ public class Slingshot : MonoBehaviour {
 		projectile.transform.position = launchPos;
 
 		//Set isKinematic is true for now
-		projectile.GetComponent<Rigidbody> ().isKinematic = true;
+		projectile.GetComponent<Rigidbody>().isKinematic = true;
 	
 
 
 	}
 
 	void Update() {
-	    //if we're not in aming mode, do nothing
+	    //If we're not in aming mode, do nothing
 		if(!aimingMode) {
 			return;
 
@@ -70,17 +71,31 @@ public class Slingshot : MonoBehaviour {
 
 	//Convert it to 3D world coordinates
 		mousePos2D.z = - Camera.main.transform.position.z;
-		Vector3 mousePos3D = Camera.main.ScreenToWorldPoint (mousePos2D);
+		Vector3 mousePos3D = Camera.main.ScreenToWorldPoint(mousePos2D);
 	
 
 
     //Find the difference between launchPos and mouse position
 		Vector3 mouseDelta = mousePos3D - launchPos;
 
+		float maxMagnitude = this.GetComponent<SphereCollider>().radius;
+
+		mouseDelta = Vector3.ClampMagnitude(mouseDelta,maxMagnitude);
+	
 	
 
     //Move the projectile to this new position
-		projectile.transform.position = mousePos3D;
+		projectile.transform.position = launchPos + mouseDelta;
+
+		if (Input.GetMouseButtonUp(0)) {
+			aimingMode = false;
+			projectile.GetComponent<Rigidbody>().isKinematic = false;
+
+			projectile.GetComponent<Rigidbody>().velocity = -mouseDelta * shotMult;
+
+			FollowCam.S.poi = projectile;
+
+		}
 	
 	}
 
