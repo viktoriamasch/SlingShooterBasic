@@ -28,10 +28,24 @@ public class FollowCam : MonoBehaviour {
 
 		Vector3 destination = poi.transform.position;
 
+
+		//Limit the x and y Position to minumum values
+
+
+		destination.x = Mathf.Max (0, destination.x);
+		destination.y = Mathf.Max (0, destination.y);
+
+
+
+
 		destination.z = camZ;
 
 		transform.position = destination;
 
+
+		this.GetComponent<Camera> ().orthographicSize = 10 + destination.y;//Mathf.Max(10, destination.y);
+
+	
 	}
 
 
