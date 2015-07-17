@@ -10,6 +10,13 @@ public class FollowCam : MonoBehaviour {
 
 	private float camZ;
 
+	public Transform farLeft;
+	public Transform farRight;
+
+
+
+
+
 
 	void Awake() {
 		S = this;
@@ -34,6 +41,7 @@ public class FollowCam : MonoBehaviour {
 
 		destination.x = Mathf.Max (0, destination.x);
 		destination.y = Mathf.Max (0, destination.y);
+		destination.x = Mathf.Clamp (destination.x, farLeft.position.x, farRight.position.x);
 
 
 
@@ -44,6 +52,9 @@ public class FollowCam : MonoBehaviour {
 
 
 		this.GetComponent<Camera> ().orthographicSize = 10 + destination.y;//Mathf.Max(10, destination.y);
+
+	
+
 
 	
 	}
