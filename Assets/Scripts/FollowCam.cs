@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class FollowCam : MonoBehaviour {
@@ -12,6 +12,7 @@ public class FollowCam : MonoBehaviour {
 
 	public Transform farLeft;
 	public Transform farRight;
+
 
 
 
@@ -42,6 +43,7 @@ public class FollowCam : MonoBehaviour {
 		destination.x = Mathf.Max (0, destination.x);
 		destination.y = Mathf.Max (0, destination.y);
 		destination.x = Mathf.Clamp (destination.x, farLeft.position.x, farRight.position.x);
+
 
 
 
